@@ -66,16 +66,17 @@ const nextButton = document.getElementById('next-button');
 const resultContainer = document.getElementById('result-container');
 const scoreElement = document.getElementById('score');
 const restartButton = document.getElementById('restart-button');
-
 const questionNumElement = document.getElementById('question-number');
 
+// Shuffle the questions only once
+let shuffledQuestions = [];
 
 function loadQuestion() {
   const currentQuestion = questions[currentQuestionIndex];
   questionElement.textContent = currentQuestion.question;
   optionsElement.innerHTML = '';
   questionNumberTracking();
-  shuffleArray(questions)
+ 
   
   
   currentQuestion.options.forEach(option => {
@@ -86,16 +87,13 @@ function loadQuestion() {
   });
 }
 
-function shuffleArray(questions) {
-  for (let i = questions.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-    [questions[i], questions[j]] = [questions[j], questions[i]]; // swap elements
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]]; // swap elements
+    }
+    return arr;
   }
-  return questions;
-}
-
-// let myArray = [1, 2, 3, 4, 5];
-// console.log(shuffleArray(myArray));
 
 
 function checkAnswer(selectedOption) {
