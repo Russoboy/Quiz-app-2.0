@@ -96,15 +96,17 @@ function loadQuestion() {
   }
 
 
-function checkAnswer(selectedOption) {
-  const correctAnswer = questions[currentQuestionIndex].answer;
-  if (selectedOption === correctAnswer) {
-      score++;
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]]; // swap elements
+    }
+    return arr;
   }
 
   currentQuestionIndex++;
 
-  if (currentQuestionIndex < questions.length) {
+  if (currentQuestionIndex <  shuffledQuestions.length) {
       loadQuestion();
   } else {
       showResult();
@@ -112,7 +114,7 @@ function checkAnswer(selectedOption) {
 }
 
 function questionNumberTracking() {
-  questionNumElement.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;  
+  questionNumElement.textContent = `Question ${currentQuestionIndex + 1} of ${shuffledQuestions.length}`;  
 }
 
 function showResult() {
@@ -126,6 +128,7 @@ function showResult() {
 function restartQuiz() {
   currentQuestionIndex = 0;
   score = 0;
+  shuffledQuestions = shuffleArray([...questions]); // Shuffle questions once at the start
   questionElement.classList.remove('hidden');
   optionsElement.classList.remove('hidden');
   nextButton.classList.remove('hidden');
